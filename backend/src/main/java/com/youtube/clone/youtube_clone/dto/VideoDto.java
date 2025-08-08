@@ -18,4 +18,5 @@ public class VideoDto {
     private Set<String> tags;
     private VideoStatus videoStatus;
     private String thumbnailUrl;
+    private String videoUrl;
 }

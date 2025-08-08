@@ -68,12 +68,12 @@
             </div>
             <br/>
             <div>
-                <button type="submit" mat-raised-button color="primary">Save</button>
+                <button type="submit" mat-raised-button color="primary" (click)="saveVideo()">Save</button>
             </div>
         </form>
     </div>
     <div fxFlex="30%">
-        Display Video Player
+        <app-video-player *ngIf="videoAvailable" [videoUrl]="videoUrl"></app-video-player>
     </div>
     <div fxFlex="20%">Hi</div>
 </div>

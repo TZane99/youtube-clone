@@ -4,9 +4,11 @@
     <span class="example-spacer"></span>
     <button matIconButton class="example-icon" aria-label="Example icon-button with menu icon">
         <mat-icon>video_call</mat-icon>
-    </button>  
-    <button matIconButton class="example-icon" aria-label="Example icon-button with share icon">
+    </button> 
+    <button *ngIf="isAuthenticated" matIconButton class="example-icon" aria-label="Example icon-button with share icon">
         <mat-icon>account_circle</mat-icon>
     </button>
+    <button *ngIf="!isAuthenticated" mat-raised-button (click)="login()">Login</button>
+    <button *ngIf="isAuthenticated" mat-raised-button (click)="logout()">Logout</button>
   </mat-toolbar-row>
 </mat-toolbar>

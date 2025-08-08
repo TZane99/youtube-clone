@@ -6,7 +6,7 @@ import { App } from './app';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxFileDropModule } from 'ngx-file-drop';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { UploadVideoComponent } from './upload-video/upload-video';
 import { MatButtonModule } from  '@angular/material/button';
 import { Header } from './header/header';
@@ -25,6 +25,11 @@ import {VgOverlayPlayModule} from '@videogular/ngx-videogular/overlay-play';
 import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { VideoPlayer } from './video-player/video-player';
+import { FlexLayoutServerModule } from '@angular/flex-layout/server';
+import { LandingPage } from './landing-page/landing-page'
+import { AuthHttpInterceptor } from '@auth0/auth0-angular';
+import { AuthConfigModule } from './auth/auth-config.module';
+import { VideoDetail } from './video-detail/video-detail';
 
 @NgModule({
   declarations: [
@@ -32,7 +37,9 @@ import { VideoPlayer } from './video-player/video-player';
     UploadVideoComponent,
     Header,
     SaveVideoDetails,
-    VideoPlayer
+    VideoPlayer,
+    LandingPage,
+    VideoDetail
   ],
   imports: [
     BrowserModule,
@@ -55,13 +62,17 @@ import { VideoPlayer } from './video-player/video-player';
     VgControlsModule,
     VgOverlayPlayModule,
     VgBufferingModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    FlexLayoutServerModule,
+    AuthConfigModule
 
   ],
   providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true},
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
-    provideClientHydration(withEventReplay())
+    provideClientHydration(withEventReplay()),
+    
   ],
   bootstrap: [App]
 })
