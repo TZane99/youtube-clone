@@ -20,6 +20,9 @@ export class VideoDetail implements OnInit{
 
   constructor(private activatedRoute: ActivatedRoute, private videoService: VideoService){
     this.videoId = this.activatedRoute.snapshot.params['videoId'];
+  }
+
+  ngOnInit(): void {
     this.videoService.getVideo(this.videoId).subscribe(data =>{
       this.videoUrl = data.videoUrl;
       this.videoTitle = data.title;
@@ -27,10 +30,6 @@ export class VideoDetail implements OnInit{
       this.videoTags = data.tags;
       this.videoAvailable = true;
     });
-  }
-
-  ngOnInit(): void {
-    this.videoAvailable
   }
 
 }

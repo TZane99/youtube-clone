@@ -2,6 +2,7 @@ package com.youtube.clone.youtube_clone.model;
 
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -21,14 +22,33 @@ public class Video {
     private String title;
     private String description;
     private String userId;
-    private Integer likes;
-    private Integer disLikes;
+    private AtomicInteger likes = new AtomicInteger(0);
+    private AtomicInteger disLikes = new AtomicInteger(0);
     private Set<String> tags;
     private String videoUrl;
-    private Integer viewCount;
+    private AtomicInteger viewCount = new AtomicInteger(0);
     private String thumbnailUrl;
     private VideoStatus videoStatus;
     private List<Comment> commentList;
 
 
+    public void incrementLikes(){
+        likes.incrementAndGet();
+    }
+
+    public void decreaseLikes(){
+        likes.decrementAndGet();
+    }
+
+    public void incrementDislikes(){
+        disLikes.incrementAndGet();
+    }
+
+    public void decreaseDislikes(){
+        disLikes.decrementAndGet();
+    }
+
+    public void incrementViewCount(){
+        viewCount.incrementAndGet();
+    }
 }

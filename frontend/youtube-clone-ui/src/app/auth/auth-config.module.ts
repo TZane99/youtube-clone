@@ -9,14 +9,14 @@ import { AuthModule, AuthConfig } from '@auth0/auth0-angular';
       clientId: 'dHei4wUJrUGnEk5ialFbnNn8HGWxS0D0',
       authorizationParams: {
         redirectUri: getSafeRedirectUri(),
-        audience: 'http://localhost:8080',  // this must match Auth0 API identifier
+        audience: 'http://localhost:8080',
         scope: 'openid profile email offline_access',
         prompt: 'consent'
       },
       httpInterceptor: {
         allowedList: [
           {
-            uri: 'http://localhost:8080/api/videos/*',
+            uri: 'http://localhost:8080/*',
             tokenOptions: {
               authorizationParams: {
                 audience: 'http://localhost:8080',

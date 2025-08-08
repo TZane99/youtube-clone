@@ -15,6 +15,7 @@ public class VideoService {
 
     private final S3Service s3Service;
     private final VideoRepository videoRepository;
+    private final UserService userService;
 
     public UploadVideoResponse uploadVideo(MultipartFile multipartFile){
         String videoUrl = s3Service.uploadFile(multipartFile);
@@ -61,14 +62,75 @@ public class VideoService {
     public VideoDto getVideoDetails(String videoId){
         Video savedVideo = getVideoById(videoId);
 
+        increaseViewCount(savedVideo);
+        userService.addVideoToHistory(videoId);
+        
+        return mapVideoDto(savedVideo);
+    }
+
+    private void increaseViewCount(Video savedVideo) {
+        savedVideo.incrementViewCount();
+        videoRepository.save(savedVideo);
+    }
+
+    public VideoDto likeVideo(String videoId){
+        Video videoById = getVideoById(videoId);
+
+        if (userService.ifLikedVideo(videoId)){
+            videoById.decreaseLikes();
+            userService.removeFromLikedVideos(videoId);
+        }else if(userService.ifDislikedVideo(videoId)){
+            videoById.decreaseDislikes();
+            userService.removeFromDislikedVideos(videoId);
+            videoById.incrementLikes();
+            userService.addToLikedVideos(videoId);
+        }else{
+            videoById.incrementLikes();
+            userService.addToLikedVideos(videoId);
+        }
+
+        videoRepository.save(videoById);
+
+        return mapVideoDto(videoById);
+
+
+        
+    }
+
+    public VideoDto dislikeVideo(String videoId){
+        Video videoById = getVideoById(videoId);
+        
+        if (userService.ifDislikedVideo(videoId)){
+            videoById.decreaseDislikes();
+            userService.removeFromDislikedVideos(videoId);
+        }else if(userService.ifLikedVideo(videoId)){
+            videoById.decreaseLikes();
+            userService.removeFromLikedVideos(videoId);
+            videoById.incrementDislikes();
+            userService.addToDislikedVideos(videoId);
+        }else{
+            videoById.incrementDislikes();
+            userService.addToDislikedVideos(videoId);
+        }
+
+        videoRepository.save(videoById);
+
+        return mapVideoDto(videoById);
+
+    }
+
+    private VideoDto mapVideoDto(Video video){
         VideoDto videoDto = new VideoDto();
-        videoDto.setVideoUrl(savedVideo.getVideoUrl());
-        videoDto.setThumbnailUrl(savedVideo.getThumbnailUrl());
-        videoDto.setId(savedVideo.getId());
-        videoDto.setTitle(savedVideo.getTitle());
-        videoDto.setDescription(savedVideo.getDescription());
-        videoDto.setTags(savedVideo.getTags());
-        videoDto.setVideoStatus(savedVideo.getVideoStatus());
+        videoDto.setVideoUrl(video.getVideoUrl());
+        videoDto.setThumbnailUrl(video.getThumbnailUrl());
+        videoDto.setId(video.getId());
+        videoDto.setTitle(video.getTitle());
+        videoDto.setDescription(video.getDescription());
+        videoDto.setTags(video.getTags());
+        videoDto.setVideoStatus(video.getVideoStatus());
+        videoDto.setLikeCount(video.getLikes().get());
+        videoDto.setDislikeCount(video.getDisLikes().get());
+        videoDto.setViewCount(video.getViewCount().get());
 
         return videoDto;
     }

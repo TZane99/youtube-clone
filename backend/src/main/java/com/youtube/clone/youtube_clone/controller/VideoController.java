@@ -57,4 +57,16 @@ public class VideoController {
          System.out.println("Authorization header: " + headers.getFirst("Authorization"));
         return videoService.getVideoDetails(videoId);
     }
+
+    @PostMapping("/{videoId}/like")
+    @ResponseStatus(HttpStatus.OK)
+    public VideoDto likeVideo(@PathVariable String videoId){
+        return videoService.likeVideo(videoId);
+    }
+
+    @PostMapping("/{videoId}/dislike")
+    @ResponseStatus(HttpStatus.OK)
+    public VideoDto dislikeVideo(@PathVariable String videoId){
+        return videoService.dislikeVideo(videoId);
+    }
 }
