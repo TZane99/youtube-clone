@@ -2,6 +2,7 @@ package com.youtube.clone.youtube_clone.model;
 
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.data.annotation.Id;
@@ -29,7 +30,7 @@ public class Video {
     private AtomicInteger viewCount = new AtomicInteger(0);
     private String thumbnailUrl;
     private VideoStatus videoStatus;
-    private List<Comment> commentList;
+    private List<Comment> commentList = new CopyOnWriteArrayList<>();
 
 
     public void incrementLikes(){
@@ -50,5 +51,9 @@ public class Video {
 
     public void incrementViewCount(){
         viewCount.incrementAndGet();
+    }
+
+    public void addComment(Comment comment){
+        commentList.add(comment);
     }
 }

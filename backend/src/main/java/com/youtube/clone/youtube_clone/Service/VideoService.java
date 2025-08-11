@@ -1,9 +1,13 @@
 package com.youtube.clone.youtube_clone.Service;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.youtube.clone.youtube_clone.dto.CommentDto;
 import com.youtube.clone.youtube_clone.dto.UploadVideoResponse;
 import com.youtube.clone.youtube_clone.dto.VideoDto;
+import com.youtube.clone.youtube_clone.model.Comment;
 import com.youtube.clone.youtube_clone.model.Video;
 import com.youtube.clone.youtube_clone.repository.VideoRepository;
 
@@ -133,6 +137,43 @@ public class VideoService {
         videoDto.setViewCount(video.getViewCount().get());
 
         return videoDto;
+    }
+
+    public void addComment(String videoId, CommentDto commentDto) {
+        Video video = getVideoById(videoId);
+
+        Comment comment =  new Comment();
+
+        comment.setText(commentDto.getText());
+        comment.setAuthorId(commentDto.getAuthorId());
+        comment.setLikeCount(commentDto.getLikeCount());
+        comment.setDisLikeCount(commentDto.getDisLikeCount());
+
+        video.addComment(comment);
+
+        videoRepository.save(video);
+    }
+
+    public List<CommentDto> getComments(String videoId) {
+        Video video = getVideoById(videoId);
+
+        List<Comment> commentList = video.getCommentList();
+
+        return commentList.stream().map(this::mapToCommentDto).toList();
+    }
+
+    private CommentDto mapToCommentDto(Comment comment){
+        CommentDto commentDto = new CommentDto();
+        commentDto.setText(comment.getText());
+        commentDto.setAuthorId(comment.getAuthorId());
+        commentDto.setLikeCount(comment.getLikeCount());
+        commentDto.setDisLikeCount(comment.getDisLikeCount());
+
+        return commentDto;
+    }
+
+    public List<VideoDto> getVideos() {
+        return videoRepository.findAll().stream().map(this::mapVideoDto).toList();
     }
     
 }

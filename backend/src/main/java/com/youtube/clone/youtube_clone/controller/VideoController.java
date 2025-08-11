@@ -1,5 +1,7 @@
 package com.youtube.clone.youtube_clone.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.youtube.clone.youtube_clone.Service.VideoService;
+import com.youtube.clone.youtube_clone.dto.CommentDto;
 import com.youtube.clone.youtube_clone.dto.UploadVideoResponse;
 import com.youtube.clone.youtube_clone.dto.VideoDto;
 
@@ -69,4 +72,23 @@ public class VideoController {
     public VideoDto dislikeVideo(@PathVariable String videoId){
         return videoService.dislikeVideo(videoId);
     }
+
+    @PostMapping("{videoId}/comment")
+    @ResponseStatus(HttpStatus.OK)
+    public void addComment(@PathVariable String videoId, @RequestBody CommentDto commentDto){
+        videoService.addComment(videoId, commentDto);
+    }
+
+    @GetMapping("/{videoId}/comment")
+    @ResponseStatus(HttpStatus.OK)
+    public List<CommentDto> getComments(@PathVariable String videoId){
+        return videoService.getComments(videoId);
+    }
+
+    @GetMapping()
+    @ResponseStatus(HttpStatus.OK)
+    public List<VideoDto> getVideos(){
+        return videoService.getVideos();
+    }
+
 }
