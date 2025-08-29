@@ -2,5 +2,36 @@
   flex: 1 1 auto;
 }
 .header-row {
-  background-color: lightpink;
+  background-color: lightblue;
+}
+.header-menu-item{
+  width: 100%;
+}
+
+.header-menu{
+  padding-top: 0px !important;
+  padding-top: 0px !important;
+}
+
+::ng-deep .mat-mdc-menu-panel .mat-mdc-menu-content{
+  padding: 0 !important;
+  padding-bottom: 0px !important;
+  scrollbar-width: none !important;
+  overflow-y: hidden !important;
+  -ms-overflow-style: none !important;
+  margin: 0 !important;
+  border-radius: 4px !important;
+}
+
+::ng-deep .mat-mdc-menu-panel .mat-mdc-menu-content::-webkit-scrollbar {
+  display: none !important;
+}
+
+.home-button{
+  background-color: transparent !important;
+  font-family: sans-serif;
+  box-shadow: none;
+  outline: none;
+  border-color: transparent;
+  font-size: large;
 }

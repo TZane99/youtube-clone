@@ -106,7 +106,10 @@ export class SaveVideoDetails implements OnInit{
       "tags": this.tags,
       "videoStatus": this.saveVideoDetailsForm.get('videoStatus')?.value.toUpperCase(),
       "thumbnailUrl": this.thumbnailUrl,
-      "videoUrl": this.videoUrl
+      "videoUrl": this.videoUrl,
+      "likeCount": this.saveVideoDetailsForm.get('likeCount')?.value,
+      "dislikeCount": this.saveVideoDetailsForm.get('dislikeCount')?.value,
+      "viewCount": this.saveVideoDetailsForm.get('viewCount')?.value
       
     }
 

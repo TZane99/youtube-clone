@@ -1,0 +1,112 @@
+<div *ngIf="this.firstTimeUser">
+  <mat-card-header id="profile-setup-header">
+    <mat-card-title id="profile-setup-title">Welcome to your Profile!</mat-card-title>
+  </mat-card-header>
+  <mat-vertical-stepper [linear]="false" #stepper [animationDuration]="duration">
+    <mat-step [stepControl]="channelFormGroup">
+      <form [formGroup]="channelFormGroup">
+        <ng-template matStepLabel>Fill Out Your Channel Name:</ng-template>
+        <mat-form-field>
+          <input matInput placeholder="Channel Name" formControlName="channelName" required>
+        </mat-form-field>
+        <div>
+          <button matButton matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="nameFormGroup">
+      <form [formGroup]="nameFormGroup">
+        <ng-template matStepLabel>Fill Out Your Name:</ng-template>
+        <mat-form-field>
+          <input matInput placeholder="First Name" formControlName="firstName" required>
+        </mat-form-field>
+        <div>
+        <mat-form-field>
+          <input matInput placeholder="Last Name" formControlName="lastName" required>
+        </mat-form-field>
+        </div>
+        <div>
+          <button matButton matStepperPrevious>Back</button>
+          <button matButton matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="addressFormGroup">
+      <form [formGroup]="addressFormGroup">
+        <ng-template matStepLabel>Fill Out Your Address:</ng-template>
+        <mat-form-field>
+          <input matInput placeholder="Current Street Address" formControlName="address" required>
+        </mat-form-field>
+        <div>
+          <button matButton matStepperPrevious>Back</button>
+          <button matButton matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="phoneNumberFormGroup">
+      <form [formGroup]="phoneNumberFormGroup">
+        <ng-template matStepLabel>Fill Out Your Phone Number:</ng-template>
+        <mat-form-field>
+          <input matInput placeholder="Phone Number" formControlName="phoneNumber" required>
+        </mat-form-field>
+        <div>
+          <button matButton matStepperPrevious>Back</button>
+          <button matButton matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Confirmation</ng-template>
+      Check to see if your information is correct!
+      <div>
+        <button matButton matStepperPrevious>Back</button>
+        <button matButton (click)="updateFirstTimeUser()">Submit</button>
+      </div>
+    </mat-step>
+  </mat-vertical-stepper>
+</div>
+<div *ngIf="!this.firstTimeUser">
+  <mat-card class="example-card" appearance="outlined">
+    <img mat-card-image class="profile_image" src="https://material.angular.dev/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+    <div class="test123">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title class="profile_channel_name">{{userDetails?.channelName}}</mat-card-title>
+      </mat-card-header>
+    </div>
+  <mat-tab-group animationDuration="0ms" (selectedTabChange)="onTabChange($event)">
+    <mat-tab label="User Profile">
+      <mat-card-content>
+      <table mat-table [dataSource]="table_data">
+        <ng-container matColumnDef="label">
+          <th mat-header-cell *matHeaderCellDef>User Info</th>
+          <td mat-cell *matCellDef="let row">{{row.label}}</td>
+        </ng-container>
+        <ng-container matColumnDef="value">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let row">{{row.value}}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="column_def"></tr>
+        <tr
+            mat-row
+            *matRowDef="let row; columns: column_def;"
+        ></tr>
+      </table>
+    </mat-card-content>
+    </mat-tab>
+    <mat-tab label="Videos">
+      <div *ngIf="loading">
+        <p>Loading videos...</p>
+      </div>
+      <div fxLayout="row wrap" fxLayoutGap="12px grid">
+          <div *ngIf="!loading && userVideos.length > 0">
+              <div fxFlex="20%" *ngFor="let video of userVideos">
+                  <app-video-card [video]="video"></app-video-card>
+              </div>
+          </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="Test"> Test Tab </mat-tab>
+  </mat-tab-group>
+  </mat-card>
+</div>

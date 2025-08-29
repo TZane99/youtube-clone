@@ -1,0 +1,8 @@
+.inline-container{
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-icon{
+    padding-right: 10px;
+}

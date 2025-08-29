@@ -1,0 +1,19 @@
+<div fxLayout="row wrap">
+    <h3>Featured Videos</h3>
+</div>
+
+<div *ngIf="loading">
+  <p>Loading videos...</p>
+</div>
+
+<div fxLayout="row wrap" fxLayoutGap="12px grid">
+    <div *ngIf="!loading && featuredVideos.length > 0">
+        <div fxFlex="20%" *ngFor="let video of featuredVideos">
+            <app-video-card [video]="video"></app-video-card>
+        </div>
+    </div>
+</div>
+
+<ng-template *ngIf="!loading && featuredVideos.length === 0">
+    <p>No videos found.</p>
+</ng-template>

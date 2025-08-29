@@ -1,5 +1,6 @@
 package com.youtube.clone.youtube_clone.controller;
 
+
 import java.util.Set;
 
 import org.springframework.http.HttpStatus;
@@ -8,12 +9,14 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.youtube.clone.youtube_clone.Service.UserRegistrationService;
 import com.youtube.clone.youtube_clone.Service.UserService;
+import com.youtube.clone.youtube_clone.dto.UserDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -30,18 +33,18 @@ public class UserController {
     public String register(Authentication authentication){
         Jwt jwt = (Jwt)authentication.getPrincipal();
 
-        userRegistrationService.registerUser(jwt.getTokenValue());
-        return "User Registration successful";
+        return userRegistrationService.registerUser(jwt.getTokenValue());
+        
     }
 
-    @PostMapping("/subscribe{userId}")
+    @PostMapping("/subscribe/{userId}")
     @ResponseStatus(HttpStatus.OK)
     public boolean subscribeUser(@PathVariable String userId){
         userService.subscribeUser(userId);
         return true;
     }
 
-    @PostMapping("/unSubscribe{userId}")
+    @PostMapping("/unSubscribe/{userId}")
     @ResponseStatus(HttpStatus.OK)
     public boolean unSubscribeUser(@PathVariable String userId){
         userService.unSubscribeUser(userId);
@@ -52,6 +55,19 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public Set<String> getVideoHistory(@PathVariable String userId){
         return userService.getVideoHistory(userId);
+    }
+
+    @PostMapping("{userId}/update/channelname")
+    @ResponseStatus(HttpStatus.OK)
+    public boolean updateFirstTimeUser(@PathVariable String userId, @RequestBody UserDto userDto){
+        userService.updateFirstTimeUser(userId, userDto);
+        return true;
+    }
+
+    @GetMapping("/details")
+    @ResponseStatus(HttpStatus.OK)
+    public UserDto getUserDetails(){
+        return userService.getUserDetails();
     }
 
     

@@ -26,6 +26,8 @@ public class VideoService {
         var video = new Video();
 
         video.setVideoUrl(videoUrl);
+        String userId = userService.getCurrentUser().getId();
+        video.setUserId(userId);
 
         Video saveVideo = videoRepository.save(video);
         return new UploadVideoResponse(saveVideo.getId(), saveVideo.getVideoUrl());
@@ -174,6 +176,10 @@ public class VideoService {
 
     public List<VideoDto> getVideos() {
         return videoRepository.findAll().stream().map(this::mapVideoDto).toList();
+    }
+
+    public List<VideoDto> getAllUserVideos(String userId){
+        return videoRepository.findByUserId(userId).stream().map(this::mapVideoDto).toList();
     }
     
 }

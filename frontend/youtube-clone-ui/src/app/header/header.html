@@ -1,14 +1,25 @@
 <mat-toolbar>
   <mat-toolbar-row class="header-row">
-    <span>TubeYou!</span>
+    <button class="home-button" (click)="navigateHome()">
+      <img src="assets/homepagebutton.png" alt="TubeYou">
+    </button>
     <span class="example-spacer"></span>
-    <button matIconButton class="example-icon" aria-label="Example icon-button with menu icon">
-        <mat-icon>video_call</mat-icon>
+    <button
+      mat-icon-button
+      class="example-icon"
+      aria-label="Example icon-button with menu icon"
+      (click)="navigateToUploadPage()"
+      matTooltip="Click to upload a video!">
+        <mat-icon>upload</mat-icon>
     </button> 
-    <button *ngIf="isAuthenticated" matIconButton class="example-icon" aria-label="Example icon-button with share icon">
+    <button *ngIf="isAuthenticated" matIconButton class="example-icon" aria-label="Example icon-button with share icon" 
+                  [matMenuTriggerFor]="menu">
         <mat-icon>account_circle</mat-icon>
     </button>
+    <mat-menu #menu="matMenu" class="header-menu">
+      <button *ngIf="isAuthenticated" mat-raised-button class="header-menu-item" (click)="navigateToProfilePage()">Profile</button>
+      <button *ngIf="isAuthenticated" mat-raised-button (click)="logout()" class="header-menu-item">Logout</button>
+    </mat-menu>
     <button *ngIf="!isAuthenticated" mat-raised-button (click)="login()">Login</button>
-    <button *ngIf="isAuthenticated" mat-raised-button (click)="logout()">Logout</button>
   </mat-toolbar-row>
 </mat-toolbar>

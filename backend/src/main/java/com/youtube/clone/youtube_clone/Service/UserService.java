@@ -6,6 +6,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
+import com.youtube.clone.youtube_clone.dto.UserDto;
 import com.youtube.clone.youtube_clone.model.User;
 import com.youtube.clone.youtube_clone.repository.UserRepository;
 
@@ -96,5 +97,49 @@ public class UserService {
     public Set<String> getVideoHistory(String userId) {
         User user = getTargetUser(userId); 
         return user.getVideoHistory();
+    }
+
+    public void updateFirstTimeUser(String userId, UserDto userDto){
+        User user = getTargetUser(userId);
+
+        user.setChannelName(userDto.getChannelName());
+        user.setFirstName(userDto.getFirstName());
+        user.setLastName(userDto.getLastName());
+        user.setFullName(userDto.getFullName());
+        user.setAddress(userDto.getAddress());
+        user.setPhoneNumber(userDto.getPhoneNumber());
+        user.setFirstTimeUser(userDto.getFirstTimeUser());
+        
+        System.out.println(user);
+
+        userRepository.save(user);
+    }
+
+    public UserDto getUserDetails(){
+        User user = getCurrentUser();
+
+        return createUserDto(user);
+    }
+
+    public UserDto createUserDto(User user){
+
+        UserDto userDto = new UserDto();
+
+        userDto.setEmailAddress(user.getEmailAddress());
+        userDto.setFullName(user.getFullName());
+        userDto.setFirstName(user.getFirstName());
+        userDto.setLastName(user.getLastName());
+        userDto.setFirstTimeUser(user.getFirstTimeUser());
+        userDto.setAddress(user.getAddress());
+        userDto.setEmailAddress(user.getEmailAddress());
+        userDto.setChannelName(user.getChannelName());
+        userDto.setPhoneNumber(user.getPhoneNumber());
+        userDto.setSubscribedToUsers(user.getSubscribedToUsers());
+        userDto.setSubscribers(user.getSubscribers());
+        userDto.setVideoHistory(user.getVideoHistory());
+        userDto.setLikedVideos(user.getLikedVideos());
+        userDto.setDislikedVideos(user.getDislikedVideos());
+
+        return userDto;
     }
 }

@@ -23,18 +23,11 @@ export class UploadVideoComponent {
   public dropped(files: NgxFileDropEntry[]) {
     this.files = files;
     for (const droppedFile of files) {
-
-      // Is it a file?
       if (droppedFile.fileEntry.isFile) {
         this.fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
         this.fileEntry.file((file: File) => {
-
-          // Here you can access the real file
           console.log(droppedFile.relativePath, file);
-
           this.fileUploaded = true;
-
-
         });
       } else {
         const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;

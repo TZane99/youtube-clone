@@ -5,9 +5,31 @@ import { SaveVideoDetails } from './save-video-details/save-video-details';
 import { LandingPage } from './landing-page/landing-page';
 import { VideoDetail } from './video-detail/video-detail';
 
+
+import { HistoryComponent } from './history/history';
+import { SubscriptionsComponent } from './subscriptions/subscriptions';
+import { LikedVideosComponent } from './liked-videos/liked-videos';
+import { Featured } from './featured/featured';
+import { Callback } from './callback/callback';
+import { Profile } from './profile/profile';
+
 export const routes: Routes = [
     {
         path: '', component: LandingPage,
+        children: [
+            {
+                path: 'featured', component: Featured,
+            },
+            {
+                path: 'subscriptions', component: SubscriptionsComponent,
+            },
+            {
+                path: 'history', component: HistoryComponent,
+            },
+            {
+                path: 'liked-videos', component: LikedVideosComponent,
+            },
+        ]
     },
     {
         path: 'upload-video', component: UploadVideoComponent,  
@@ -17,6 +39,12 @@ export const routes: Routes = [
     },
     {
         path: 'video-details/:videoId', component: VideoDetail,
+    },
+    {
+        path: 'callback', component: Callback,
+    },
+    {
+        path: 'profile', component: Profile,
     }
 ];
 

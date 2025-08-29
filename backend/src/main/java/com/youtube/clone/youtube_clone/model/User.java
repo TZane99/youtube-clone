@@ -23,6 +23,10 @@ public class User {
     private String fullName;
     private String emailAddress;
     private String sub;
+    private String channelName;
+    private boolean firstTimeUser;
+    private String address;
+    private String phoneNumber;
     private Set<String> subscribedToUsers = ConcurrentHashMap.newKeySet();
     private Set<String> subscribers = ConcurrentHashMap.newKeySet();
     private Set<String> videoHistory = ConcurrentHashMap.newKeySet();
@@ -63,6 +67,10 @@ public class User {
 
     public void removeFromSubscribers(String userId) {
         subscribers.remove(userId);
+    }
+
+    public boolean getFirstTimeUser(){
+        return firstTimeUser;
     }
  
 }

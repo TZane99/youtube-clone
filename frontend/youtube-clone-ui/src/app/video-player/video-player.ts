@@ -10,8 +10,7 @@ import { Component, Inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
 export class VideoPlayer implements OnInit{
   isBrowser: boolean;
 
-  @Input()
-  videoUrl!: string | '';
+  @Input() videoUrl: string = '';
   
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object){

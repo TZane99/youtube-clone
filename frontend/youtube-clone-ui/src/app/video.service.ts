@@ -40,4 +40,20 @@ export class VideoService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.httpClient.put<VideoDto>("http://localhost:8080/api/videos", videoMetaData, {headers});
   }
+
+  getAllVideos(): Observable<Array<VideoDto>>{
+    return this.httpClient.get<Array<VideoDto>>("http://localhost:8080/api/videos")
+  }
+
+  likeVideo(videoId: string): Observable<VideoDto>{
+    return this.httpClient.post<VideoDto>("http://localhost:8080/api/videos/"+videoId+"/like", null);
+  }
+
+  dislikeVideo(videoId: string): Observable<VideoDto>{
+    return this.httpClient.post<VideoDto>("http://localhost:8080/api/videos/"+videoId+"/dislike", null);
+  }
+
+  getAllVideosByUserId(userId: String): Observable<Array<VideoDto>>{
+    return this.httpClient.get<Array<VideoDto>>("http://localhost:8080/api/videos/"+userId+"/videos-by-userid");
+  }
 }

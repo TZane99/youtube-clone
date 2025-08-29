@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxFileDropModule } from 'ngx-file-drop';
-import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { UploadVideoComponent } from './upload-video/upload-video';
 import { MatButtonModule } from  '@angular/material/button';
@@ -30,6 +29,23 @@ import { LandingPage } from './landing-page/landing-page'
 import { AuthHttpInterceptor } from '@auth0/auth0-angular';
 import { AuthConfigModule } from './auth/auth-config.module';
 import { VideoDetail } from './video-detail/video-detail';
+import { HistoryComponent } from './history/history';
+import { SubscriptionsComponent } from './subscriptions/subscriptions';
+import { Sidebar } from './sidebar/sidebar';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatListModule} from '@angular/material/list';
+import { LikedVideosComponent } from './liked-videos/liked-videos';
+import { VideoCard } from './video-card/video-card';
+import {MatCardModule} from '@angular/material/card';
+import { Featured } from './featured/featured';
+import { Callback } from './callback/callback';
+import { Comments } from './comments/comments';
+import {MatMenuModule} from '@angular/material/menu';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { Profile } from './profile/profile';
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatTableModule} from '@angular/material/table';
+import {MatTabsModule} from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
@@ -39,14 +55,22 @@ import { VideoDetail } from './video-detail/video-detail';
     SaveVideoDetails,
     VideoPlayer,
     LandingPage,
-    VideoDetail
+    VideoDetail,
+    HistoryComponent,
+    SubscriptionsComponent,
+    LikedVideosComponent,
+    Sidebar,
+    Featured,
+    VideoCard,
+    Callback,
+    Comments,
+    Profile
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     NgxFileDropModule,
-    CommonModule,
     HttpClientModule,
     MatButtonModule,
     MatToolbarModule,
@@ -64,7 +88,15 @@ import { VideoDetail } from './video-detail/video-detail';
     VgBufferingModule,
     MatSnackBarModule,
     FlexLayoutServerModule,
-    AuthConfigModule
+    AuthConfigModule,
+    MatSidenavModule,
+    MatListModule,
+    MatCardModule,
+    MatMenuModule,
+    MatTooltipModule,
+    MatStepperModule,
+    MatTableModule,
+    MatTabsModule
 
   ],
   providers: [

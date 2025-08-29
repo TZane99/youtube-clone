@@ -8,7 +8,7 @@ import { AuthModule, AuthConfig } from '@auth0/auth0-angular';
       domain: 'dev-atwdgfhoqqsj2y2y.us.auth0.com',
       clientId: 'dHei4wUJrUGnEk5ialFbnNn8HGWxS0D0',
       authorizationParams: {
-        redirectUri: getSafeRedirectUri(),
+        redirectUri: "http://localhost:4200/callback",
         audience: 'http://localhost:8080',
         scope: 'openid profile email offline_access',
         prompt: 'consent'
@@ -27,12 +27,13 @@ import { AuthModule, AuthConfig } from '@auth0/auth0-angular';
       },
       cacheLocation: 'localstorage',
       useRefreshTokens: true,
-      useRefreshTokensFallback: true
+      useRefreshTokensFallback: true,
+      useCookiesForTransactions: false
     }),
   ],
 })
 export class AuthConfigModule {}
 
 function getSafeRedirectUri(): string {
-  return typeof window !== 'undefined' ? window.location.origin : 'http://localhost:4200';
-}
+  return typeof window !== 'undefined' ? window.location.origin : 'http://localhost:4200/callback';
+  }
